@@ -8,9 +8,8 @@
 class CCore
 {
 private:
-	SDL_Window* window;
-	SDL_Renderer* rR;
-	SDL_Event* mainEvent;
+	sf::RenderWindow* window;
+	sf::Event* mainEvent;
 
 	// ----- FPS -----
 

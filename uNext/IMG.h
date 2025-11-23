@@ -8,23 +8,25 @@
 class CIMG
 {
 private:
-	SDL_Texture* tIMG;
-	SDL_Rect rRect;
+	sf::Texture tIMG;
+	sf::Sprite sprite;
+	sf::Vector2f position;
+	sf::IntRect rRect;
 
 public:
 	CIMG(void);
-	CIMG(std::string fileName, SDL_Renderer* rR);
+	CIMG(std::string fileName, sf::RenderWindow* window);
 	~CIMG(void);
 
-	void Draw(SDL_Renderer * rR, int iXOffset, int iYOffset);
-	void Draw(SDL_Renderer * rR, int iXOffset, int iYOffset, bool bRoate);
-	void DrawVert(SDL_Renderer * rR, int iXOffset, int iYOffset);
-	void Draw(SDL_Renderer * rR, SDL_Rect rCrop, SDL_Rect rRect);
+	void Draw(sf::RenderWindow* window, int iXOffset, int iYOffset);
+	void Draw(sf::RenderWindow* window, int iXOffset, int iYOffset, bool bRotate);
+	void DrawVert(sf::RenderWindow* window, int iXOffset, int iYOffset);
+	void Draw(sf::RenderWindow* window, sf::IntRect rCrop, sf::IntRect rRect);
 
 	/* ----- get & set ----- */
-	SDL_Texture* getIMG();
-	void setIMG(std::string fileName, SDL_Renderer* rR);
-	SDL_Rect getRect();
+	sf::Texture* getIMG();
+	void setIMG(std::string fileName, sf::RenderWindow* window);
+	sf::IntRect getRect();
 };
 
 #endif

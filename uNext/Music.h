@@ -3,15 +3,16 @@
 #ifndef MUSIC_H
 #define MUSIC_H
 
-#include <SDL3_mixer/SDL_mixer.h>
+#include <SFML/Audio.hpp>
 #include <string>
 #include <vector>
 
 class Music
 {
 private:
-	std::vector<Mix_Music*> vMusic;
-	std::vector<Mix_Chunk*> vChunk;
+	std::vector<sf::Music*> vMusic;
+	std::vector<sf::SoundBuffer*> vChunkBuffers;
+	std::vector<sf::Sound*> vChunk;
 
 	int iVolume;
 public:
@@ -79,8 +80,8 @@ public:
 
 	void PlayChunk(eChunk chunkID);
 
-	Mix_Music* loadMusic(std::string fileName);
-	Mix_Chunk* loadChunk(std::string fileName);
+	sf::Music* loadMusic(std::string fileName);
+	sf::Sound* loadChunk(std::string fileName);
 
 	// -- get & set
 

@@ -18,10 +18,8 @@ elseif (${CMAKE_CXX_COMPILER_ID} STREQUAL "MSVC")
 	endif()
 endif()
 
-find_package(SDL3 REQUIRED CONFIG)
-find_package(SDL3_image REQUIRED CONFIG)
-find_package(SDL3_mixer REQUIRED CONFIG)
-include_directories(${SDL3_INCLUDE_DIR} ${SDL3_IMAGE_INCLUDE_DIR} ${SDL3_MIXER_INCLUDE_DIR})
+find_package(SFML 2.6 REQUIRED COMPONENTS graphics window system audio)
+include_directories(${SFML_INCLUDE_DIR})
 
 file(COPY uNext/files DESTINATION .)
 
@@ -30,6 +28,6 @@ include_directories(uNext)
 file(GLOB_RECURSE uMario_SOURCES "uNext/*.cpp")
 add_executable (uMario ${uMario_SOURCES})
 
-target_link_libraries(uMario PRIVATE SDL3::SDL3 SDL3_image::SDL3_image SDL3_mixer::SDL3_mixer)
+target_link_libraries(uMario PRIVATE sfml-graphics sfml-window sfml-system sfml-audio)
 
 install(TARGETS uMario RUNTIME DESTINATION ${BIN_DIR})
