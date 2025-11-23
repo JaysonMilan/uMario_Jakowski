@@ -70,7 +70,7 @@ void Spring::Update() {
 	}
 }
 
-void Spring::Draw(SDL_Renderer* rR, CIMG* iIMG) {
+void Spring::Draw(sf::RenderWindow* rR, CIMG* iIMG) {
 	iIMG->Draw(rR, (int)fXPos + (int)CCore::getMap()->getXPos(), (int)fYPos, false);
 }
 

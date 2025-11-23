@@ -45,7 +45,7 @@ bool Flower::updateMinion() {
 	return minionSpawned;
 }
 
-void Flower::Draw(SDL_Renderer* rR, CIMG* iIMG) {
+void Flower::Draw(sf::RenderWindow* rR, CIMG* iIMG) {
 	if(minionState >= 0) {
 		iIMG->Draw(rR, (int)fXPos + (int)CCore::getMap()->getXPos(), (int)fYPos + 2, false);
 		if (inSpawnState) {

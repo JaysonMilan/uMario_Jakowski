@@ -14,7 +14,7 @@ public:
 	~LoadingMenu(void);
 
 	void Update();
-	void Draw(SDL_Renderer* rR);
+	void Draw(sf::RenderWindow* rR);
 
 	void updateTime();
 

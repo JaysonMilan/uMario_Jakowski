@@ -75,7 +75,7 @@ void UpFire::Update() {
 	}
 }
 
-void UpFire::Draw(SDL_Renderer* rR, CIMG* iIMG) {
+void UpFire::Draw(sf::RenderWindow* rR, CIMG* iIMG) {
 	if(moveDirection) {
 		iIMG->Draw(rR, (int)fXPos + (int)CCore::getMap()->getXPos(), (int)fYPos, false);
 	} else {

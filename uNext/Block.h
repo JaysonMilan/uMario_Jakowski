@@ -25,7 +25,7 @@ public:
 	Block(int iBlockID, Sprite* sSprite, bool bCollision, bool bDeath, bool bUse, bool bVisible);
 	~Block(void);
 
-	void Draw(SDL_Renderer* rR, int iOffsetX, int iOffsetY);
+	void Draw(sf::RenderWindow* rR, int iOffsetX, int iOffsetY);
 
 	/* ----- get & set ----- */
 	int getBlockID();

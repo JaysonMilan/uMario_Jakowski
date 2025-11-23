@@ -46,7 +46,7 @@ void Vine::Update() {
 	}
 }
 
-void Vine::Draw(SDL_Renderer* rR, CIMG* iIMG) {
+void Vine::Draw(sf::RenderWindow* rR, CIMG* iIMG) {
 	if(jumpDistance < 32) {
 		CCore::getMap()->getMinionBlock(iBlockID - 1)->Draw(rR, (int)(iX*32 + CCore::getMap()->getXPos()), (int)(CCFG::GAME_HEIGHT - 16 - iY*32 - jumpDistance));
 	} else {

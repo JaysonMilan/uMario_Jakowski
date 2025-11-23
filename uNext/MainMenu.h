@@ -11,13 +11,13 @@ private:
 	bool selectWorld;
 	int activeWorldID, activeSecondWorldID;
 
-	SDL_Rect rSelectWorld;
+	sf::IntRect rSelectWorld;
 public:
 	MainMenu(void);
 	~MainMenu(void);
 
 	void Update();
-	void Draw(SDL_Renderer* rR);
+	void Draw(sf::RenderWindow* rR);
 
 	void enter();
 	void escape();

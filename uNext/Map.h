@@ -117,7 +117,7 @@ private:
 	int getEndBlock();
 
 	// ----- Load -----
-	void loadGameData(SDL_Renderer* rR);
+	void loadGameData(sf::RenderWindow* rR);
 
 	void createMap();
 
@@ -229,7 +229,7 @@ private:
 	void clearMinions();
 public:
 	Map(void);
-	Map(SDL_Renderer* rR);
+	Map(sf::RenderWindow* rR);
 	~Map(void);
 
 	void Update();
@@ -240,11 +240,11 @@ public:
 	void UpdateBlocks();
 	void UpdateMinionBlokcs();
 
-	void Draw(SDL_Renderer* rR);
-	void DrawMap(SDL_Renderer* rR);
-	void DrawMinions(SDL_Renderer* rR);
-	void DrawGameLayout(SDL_Renderer* rR);
-	void DrawLines(SDL_Renderer* rR);
+	void Draw(sf::RenderWindow* rR);
+	void DrawMap(sf::RenderWindow* rR);
+	void DrawMinions(sf::RenderWindow* rR);
+	void DrawGameLayout(sf::RenderWindow* rR);
+	void DrawLines(sf::RenderWindow* rR);
 
 	void moveMap(int iX, int iY);
 	void setSpawnPoint();
@@ -314,7 +314,7 @@ public:
 	// ----- LOAD
 	void resetGameData();
 	void loadLVL();
-	void setBackgroundColor(SDL_Renderer* rR);
+	void setBackgroundColor(sf::RenderWindow* rR);
 	std::string getLevelName();
 
 	void startLevelAnimation();

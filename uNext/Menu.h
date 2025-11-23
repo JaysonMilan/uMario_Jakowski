@@ -20,7 +20,7 @@ public:
 	int numOfMenuOptions;
 
 	virtual void Update();
-	virtual void Draw(SDL_Renderer* rR);
+	virtual void Draw(sf::RenderWindow* rR);
 
 	// ----- 0 = TOP, 1 = RIGHT, 2 = BOTTOM, 3 = LEFT
 	virtual void updateActiveButton(int iDir);

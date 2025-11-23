@@ -22,7 +22,7 @@ public:
 	~AboutMenu(void);
 
 	void Update();
-	void Draw(SDL_Renderer* rR);
+	void Draw(sf::RenderWindow* rR);
 
 	void enter();
 
@@ -32,7 +32,7 @@ public:
 	void nextColor();
 	int getColorStep(int iOld, int iNew);
 
-	void setBackgroundColor(SDL_Renderer* rR);
+	void setBackgroundColor(sf::RenderWindow* rR);
 	void updateTime();
 };
 

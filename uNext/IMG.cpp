@@ -4,68 +4,80 @@
 
 CIMG::CIMG(void) { }
 
-CIMG::CIMG(std::string fileName, SDL_Renderer* rR) {
-	setIMG(fileName, rR);
+CIMG::CIMG(std::string fileName, sf::RenderWindow* window) {
+	setIMG(fileName, window);
 }
 
 CIMG::~CIMG(void) {
-	SDL_DestroyTexture(tIMG);
+	// sf::Texture handles cleanup automatically
 }
 
 /* ******************************************** */
 
-void CIMG::Draw(SDL_Renderer* rR, int iXOffset, int iYOffset) {
-	rRect.x = iXOffset;
-	rRect.y = iYOffset;
-
-	SDL_RenderTexture(rR, tIMG, NULL, &rRect);
+void CIMG::Draw(sf::RenderWindow* window, int iXOffset, int iYOffset) {
+	sprite.setPosition(iXOffset, iYOffset);
+	window->draw(sprite);
 }
 
-void CIMG::Draw(SDL_Renderer* rR, int iXOffset, int iYOffset, bool bRotate) {
-	rRect.x = iXOffset;
-	rRect.y = iYOffset;
+void CIMG::Draw(sf::RenderWindow* window, int iXOffset, int iYOffset, bool bRotate) {
+	sprite.setPosition(iXOffset, iYOffset);
 
 	if(!bRotate) {
-		SDL_RenderTexture(rR, tIMG, NULL, &rRect);
+		sprite.setRotation(0);
+		sprite.setScale(1, 1);
 	} else {
-		SDL_RenderTextureRotated(rR, tIMG, NULL, &rRect, 180.0, NULL, SDL_FLIP_VERTICAL);
+		sprite.setRotation(180);
+		sprite.setScale(1, -1);
 	}
+
+	window->draw(sprite);
 }
 
-void CIMG::DrawVert(SDL_Renderer* rR, int iXOffset, int iYOffset) {
-	rRect.x = iXOffset;
-	rRect.y = iYOffset;
-
-	SDL_RenderTextureRotated(rR, tIMG, NULL, &rRect, 180.0, NULL, SDL_FLIP_HORIZONTAL);
+void CIMG::DrawVert(sf::RenderWindow* window, int iXOffset, int iYOffset) {
+	sprite.setPosition(iXOffset, iYOffset);
+	sprite.setRotation(180);
+	sprite.setScale(-1, 1);
+	window->draw(sprite);
 }
 
-void CIMG::Draw(SDL_Renderer* rR, SDL_Rect rCrop, SDL_Rect rRect) {
-	SDL_RenderTexture(rR, tIMG, &rCrop, &rRect);
+void CIMG::Draw(sf::RenderWindow* window, sf::IntRect rCrop, sf::IntRect rRect) {
+	sprite.setTextureRect(rCrop);
+	sprite.setPosition(rRect.left, rRect.top);
+	sprite.setScale(
+		(float)rRect.width / rCrop.width,
+		(float)rRect.height / rCrop.height
+	);
+	window->draw(sprite);
 }
 
 /* ******************************************** */
 
-void CIMG::setIMG(std::string fileName, SDL_Renderer* rR) {
+void CIMG::setIMG(std::string fileName, sf::RenderWindow* window) {
 	fileName = "files/images/" + fileName + ".bmp";
-	SDL_Surface* loadedSurface = SDL_LoadBMP(fileName.c_str());
-	SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface->format, 255, 0, 255));
 
-	tIMG = SDL_CreateTextureFromSurface(rR, loadedSurface);
-	int iWidth, iHeight;
+	if (!tIMG.loadFromFile(fileName)) {
+		// Handle error - texture failed to load
+		return;
+	}
 
-	SDL_QueryTexture(tIMG, NULL, NULL, &iWidth, &iHeight);
-	
-	rRect.x  = 0;
-	rRect.y = 0;
-	rRect.w = iWidth;
-	rRect.h = iHeight;
-	SDL_FreeSurface(loadedSurface);
+	// Set magenta (255,0,255) as transparent color
+	sf::Image img = tIMG.copyToImage();
+	img.createMaskFromColor(sf::Color(255, 0, 255));
+	tIMG.loadFromImage(img);
+
+	sprite.setTexture(tIMG);
+
+	sf::Vector2u size = tIMG.getSize();
+	rRect.left = 0;
+	rRect.top = 0;
+	rRect.width = size.x;
+	rRect.height = size.y;
 }
 
-SDL_Texture* CIMG::getIMG() {
-	return tIMG;
+sf::Texture* CIMG::getIMG() {
+	return &tIMG;
 }
 
-SDL_Rect CIMG::getRect() {
+sf::IntRect CIMG::getRect() {
 	return rRect;
 }

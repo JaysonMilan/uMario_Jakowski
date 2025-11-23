@@ -27,7 +27,7 @@ void Bubble::Update() {
 	}
 }
 
-void Bubble::Draw(SDL_Renderer* rR, CIMG* iIMG) {
+void Bubble::Draw(sf::RenderWindow* rR, CIMG* iIMG) {
 	iIMG->Draw(rR,(int)(iXPos + CCore::getMap()->getXPos()), iYPos);
 }
 

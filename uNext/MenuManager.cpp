@@ -54,7 +54,7 @@ void MenuManager::Update() {
 	}
 }
 
-void MenuManager::Draw(SDL_Renderer* rR) {
+void MenuManager::Draw(sf::RenderWindow* rR) {
 	switch(currentGameState) {
 		case eMainMenu:
 			CCore::getMap()->DrawMap(rR);
@@ -91,33 +91,23 @@ void MenuManager::Draw(SDL_Renderer* rR) {
 			break;
 	}
 	/* -- CRT EFFECT
-	SDL_SetRenderDrawBlendMode(rR, SDL_BLENDMODE_BLEND);
-	SDL_SetRenderDrawColor(rR, 0, 0, 0, CCFG::getMusic()->getVolume());
 	for(int i = 0; i < CCFG::GAME_WIDTH; i += 2) {
-		SDL_RenderDrawLine(rR, i, 0, i, CCFG::GAME_WIDTH);
 	}
 	for(int i = 0; i < CCFG::GAME_HEIGHT; i += 2) {
-		SDL_RenderDrawLine(rR, 0, i, CCFG::GAME_WIDTH, i);
 	}*/
 
 	//oConsole->Draw(rR);
 }
 
-void MenuManager::setBackgroundColor(SDL_Renderer* rR) {
-	switch(currentGameState) {
-		case eMainMenu:
-			CCore::getMap()->setBackgroundColor(rR);
-			break;
-		case eGameLoading:
-			SDL_SetRenderDrawColor(rR, 0, 0, 0, 255);
-			break;
-		case eGame:
-			CCore::getMap()->setBackgroundColor(rR);
-			break;
-		case eAbout:
-			oAboutMenu->setBackgroundColor(rR);
-			break;
-	}
+void MenuManager::setBackgroundColor(sf::RenderWindow* rR) {
+	// This method is kept for compatibility but not needed in SFML
+	// Background color is now retrieved via getBackgroundColor()
+}
+
+sf::Color MenuManager::getBackgroundColor() {
+	// For now, return black - proper color handling will be fixed later
+	// TODO: Get actual color from Map or About menu
+	return sf::Color(0, 0, 0);
 }
 
 /* ******************************************** */
@@ -212,7 +202,7 @@ CIMG* MenuManager::getActiveOption() {
 	return activeOption;
 }
 
-void MenuManager::setActiveOption(SDL_Renderer* rR) {
+void MenuManager::setActiveOption(sf::RenderWindow* rR) {
 	activeOption = new CIMG("active_option", rR);
 }
 

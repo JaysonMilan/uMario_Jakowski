@@ -8,9 +8,9 @@
 class LevelEditor
 {
 private:
-	SDL_Rect rBlock;
+	sf::IntRect rBlock;
 
-	SDL_Rect rDrag;
+	sf::IntRect rDrag;
 
 	int currentBlockID;
 public:
@@ -18,13 +18,13 @@ public:
 	~LevelEditor(void);
 
 	void Update();
-	void Draw(SDL_Renderer* rR);
+	void Draw(sf::RenderWindow* rR);
 
 	void mouseWheel(int Y);
 	
 	void editMap();
 
-	void drawStruct(SDL_Renderer* rR);
+	void drawStruct(sf::RenderWindow* rR);
 };
 
 #endif

@@ -11,8 +11,8 @@ class Text
 private:
 	CIMG* FONT;
 
-	SDL_Rect rCrop;
-	SDL_Rect rRect;
+	sf::IntRect rCrop;
+	sf::IntRect rRect;
 
 	int fontSize;
 	int extraLeft, nextExtraLeft;
@@ -24,16 +24,16 @@ public:
 	Text(void);
 	~Text(void);
 
-	void Draw(SDL_Renderer* rR, std::string sText, int X, int Y, int fontSize = 16);
-	void Draw(SDL_Renderer* rR, std::string sText, int X, int Y, int fontSize, int iR, int iG, int iB);
-	void DrawCenterX(SDL_Renderer* rR, std::string sText, int Y, int fontSize = 16, int iR = 255, int iG = 255, int iB = 255);
-	void Draw(SDL_Renderer* rR, std::string sText, int X, int Y, int iWidth, int iHeight);
-	void DrawWS(SDL_Renderer* rR, std::string sText, int X, int Y,int iR, int iG, int iB, int fontSize = 16);
+	void Draw(sf::RenderWindow* rR, std::string sText, int X, int Y, int fontSize = 16);
+	void Draw(sf::RenderWindow* rR, std::string sText, int X, int Y, int fontSize, int iR, int iG, int iB);
+	void DrawCenterX(sf::RenderWindow* rR, std::string sText, int Y, int fontSize = 16, int iR = 255, int iG = 255, int iB = 255);
+	void Draw(sf::RenderWindow* rR, std::string sText, int X, int Y, int iWidth, int iHeight);
+	void DrawWS(sf::RenderWindow* rR, std::string sText, int X, int Y,int iR, int iG, int iB, int fontSize = 16);
 
 	int getTextWidth(std::string sText, int fontSize = 16);
 
 	// ----- SET FONT IMG
-	void setFont(SDL_Renderer* rR, std::string fileName);
+	void setFont(sf::RenderWindow* rR, std::string fileName);
 };
 
 #endif

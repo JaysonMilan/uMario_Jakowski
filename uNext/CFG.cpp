@@ -20,6 +20,7 @@ CIMG* CCFG::tSMBLOGO = new CIMG();
 
 MenuManager* CCFG::oMM = new MenuManager();
 Music* CCFG::oMusic = new Music();
+sf::Clock* CCFG::gameClock = new sf::Clock();
 
 bool CCFG::keySpace = false;
 
@@ -49,6 +50,10 @@ CIMG* CCFG::getSMBLOGO() {
 	return tSMBLOGO;
 }
 
+unsigned long CCFG::getTicks() {
+	return gameClock->getElapsedTime().asMilliseconds();
+}
+
 std::string CCFG::getKeyString(int keyID) {
 	if(keyID >= 97 && keyID <= 122) {
 		return std::string(1, '0' + (keyID - 32) - 48);
@@ -59,25 +64,25 @@ std::string CCFG::getKeyString(int keyID) {
 	}
 
 	switch(keyID) {
-		case SDLK_ESCAPE:
+		case sf::Keyboard::Escape:
 			return "ESCAPE";
-		case SDLK_SPACE:
+		case sf::Keyboard::Space:
 			return "SPACE";
-		case SDLK_LSHIFT:
+		case sf::Keyboard::LShift:
 			return "LSHIFT";
-		case SDLK_RSHIFT:
+		case sf::Keyboard::RShift:
 			return "RSHIFT";
-		case SDLK_UP:
+		case sf::Keyboard::Up:
 			return "UP";
-		case SDLK_DOWN:
+		case sf::Keyboard::Down:
 			return "DOWN";
-		case SDLK_RIGHT:
+		case sf::Keyboard::Right:
 			return "RIGHT";
-		case SDLK_LEFT:
+		case sf::Keyboard::Left:
 			return "LEFT";
-		case SDLK_LCTRL:
+		case sf::Keyboard::LControl:
 			return "LCTRL";
-		case SDLK_RCTRL:
+		case sf::Keyboard::RControl:
 			return "RCTRL";
 	}
 

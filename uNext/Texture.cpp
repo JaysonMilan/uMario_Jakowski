@@ -11,7 +11,7 @@ Texture::Texture(string fileName) {
 }
 
 Texture::~Texture(void) {
-	SDL_DestroyTexture(texture);
+	delete texture;
 }
 
 /* ******************************************** */
@@ -24,6 +24,6 @@ void Texture::Draw(int offsetX, int offsetY) {
 
 /* ******************************************** */
 
-SDL_Texture* Texture::getTexture() {
+sf::Texture* Texture::getTexture() {
 	return texture;
 }

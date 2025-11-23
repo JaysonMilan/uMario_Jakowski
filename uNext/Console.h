@@ -9,7 +9,7 @@
 class Console
 {
 private:
-	SDL_Rect rRect;
+	sf::IntRect rRect;
 
 	std::vector<std::string> vPrint;
 
@@ -18,7 +18,7 @@ public:
 	Console(void);
 	~Console(void);
 
-	void Draw(SDL_Renderer* rR);
+	void Draw(sf::RenderWindow* rR);
 
 	void print(int);
 	void print(std::string sPrint);

@@ -18,7 +18,7 @@ Event::~Event(void) {
 
 /* ******************************************** */
 
-void Event::Draw(SDL_Renderer* rR) {
+void Event::Draw(sf::RenderWindow* rR) {
 	for(unsigned int i = 0; i < reDrawX.size(); i++) {
 		if(reDrawX[i] < CCore::getMap()->getMapWidth())
 			CCore::getMap()->getBlock(CCore::getMap()->getMapBlock(reDrawX[i], reDrawY[i])->getBlockID())->Draw(rR, 32 * reDrawX[i] + (int)CCore::getMap()->getXPos(), CCFG::GAME_HEIGHT - 32 * reDrawY[i] - 16);
@@ -248,11 +248,11 @@ void Event::Normal() {
 				}
 			} else {
 				++stepID;
-				iTime = SDL_GetTicks();
+				iTime = CCFG::getTicks();
 			}
 		} else {
 			if(!endGame) {
-				if(SDL_GetTicks() >= iTime + iDelay) {
+				if(CCFG::getTicks() >= iTime + iDelay) {
 					bState = false;
 					stepID = 0;
 					newLevel();

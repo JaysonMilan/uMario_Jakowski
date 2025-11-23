@@ -35,7 +35,7 @@ AboutMenu::~AboutMenu(void) {
 /* ******************************************** */
 
 void AboutMenu::Update() {
-	if(SDL_GetTicks() >= iTime + 35) {
+	if(CCFG::getTicks() >= iTime + 35) {
 		this->cR = getColorStep(cR, nR);
 		this->cG = getColorStep(cG, nG);
 		this->cB = getColorStep(cB, nB);
@@ -65,7 +65,7 @@ void AboutMenu::Update() {
 
 		//iNumOfUnits += 2;
 
-		iTime = SDL_GetTicks();
+		iTime = CCFG::getTicks();
 	}
 	
 	if(moveDirection && CCFG::GAME_WIDTH - CCore::getMap()->getXPos() >= (CCore::getMap()->getMapWidth() - 20) * 32) {
@@ -78,7 +78,7 @@ void AboutMenu::Update() {
 	//CCore::getMap()->getPlayer()->setXPos((float)CCore::getMap()->getPlayer()->getXPos() + 4 * (moveDirection ? -1 : 1));
 }
 
-void AboutMenu::Draw(SDL_Renderer* rR) {
+void AboutMenu::Draw(sf::RenderWindow* rR) {
 	CCFG::getText()->DrawWS(rR, "MARIO V 1.03 - C++ AND SDL2", 150, 128, 0, 0, 0);
 	CCFG::getText()->DrawWS(rR, "AUTOR: LUKASZ JAKOWSKI", 150, 146, 0, 0, 0);
 
@@ -220,10 +220,9 @@ int AboutMenu::getColorStep(int iOld, int iNew) {
 
 /* ******************************************** */
 
-void AboutMenu::setBackgroundColor(SDL_Renderer* rR) {
-	SDL_SetRenderDrawColor(rR, cR, cG, cB, 255);
+void AboutMenu::setBackgroundColor(sf::RenderWindow* rR) {
 }
 
 void AboutMenu::updateTime() {
-	this->iTime = SDL_GetTicks();
+	this->iTime = CCFG::getTicks();
 }

@@ -28,7 +28,7 @@ public:
 	~Platform(void);
 
 	void Update();
-	void Draw(SDL_Renderer* rR);
+	void Draw(sf::RenderWindow* rR);
 
 	void moveY();
 	void moveYReverse();

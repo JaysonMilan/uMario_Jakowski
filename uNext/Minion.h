@@ -41,7 +41,7 @@ public:
 
 	// ---------- Methods
 	virtual void Update();
-	virtual void Draw(SDL_Renderer* rR, CIMG* iIMG);
+	virtual void Draw(sf::RenderWindow* rR, CIMG* iIMG);
 
 	virtual void updateYPos(int iN);
 	virtual void updateXPos();

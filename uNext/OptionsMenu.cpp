@@ -5,10 +5,10 @@
 /* ******************************************** */
 
 OptionsMenu::OptionsMenu(void) {
-	rRect.x = 58;
-	rRect.y = 48;
-	rRect.w = 403;
-	rRect.h = 324;
+	rRect.left = 58;
+	rRect.top = 48;
+	rRect.width = 403;
+	rRect.height = 324;
 
 	this->lMO.push_back(new MenuOption("VOLUME", 73, 65));
 	this->lMO.push_back(new MenuOption("LEFT", 73, 89));
@@ -23,20 +23,20 @@ OptionsMenu::OptionsMenu(void) {
 
 	this->inSetKey = this->resetSetKey = false;
 
-	rSetKeyRect.x = 75;
-	rSetKeyRect.y = 284;
-	rSetKeyRect.w = 369;
-	rSetKeyRect.h = 71;
+	rSetKeyRect.left = 75;
+	rSetKeyRect.top = 284;
+	rSetKeyRect.width = 369;
+	rSetKeyRect.height = 71;
 
-	rVolumeBG.x = 185;
-	rVolumeBG.y = 65;
-	rVolumeBG.h = 16;
-	rVolumeBG.w = 200;
+	rVolumeBG.left = 185;
+	rVolumeBG.top = 65;
+	rVolumeBG.height = 16;
+	rVolumeBG.width = 200;
 
-	rVolume.x = 185;
-	rVolume.y = 65;
-	rVolume.h = 16;
-	rVolume.w = 100;
+	rVolume.left = 185;
+	rVolume.top = 65;
+	rVolume.height = 16;
+	rVolume.width = 100;
 
 	this->escapeToMainMenu = true;
 }
@@ -54,20 +54,15 @@ void OptionsMenu::Update() {
 	}
 }
 
-void OptionsMenu::Draw(SDL_Renderer* rR) {
-	SDL_SetRenderDrawBlendMode(rR, SDL_BLENDMODE_BLEND);
-	SDL_SetRenderDrawColor(rR, 4, 4, 4, 235);
-	SDL_RenderFillRect(rR, &rRect);
-	SDL_SetRenderDrawColor(rR, 255, 255, 255, 255);
-	rRect.x += 1;
-	rRect.y += 1;
-	rRect.h -= 2;
-	rRect.w -= 2;
-	SDL_RenderDrawRect(rR, &rRect);
-	rRect.x -= 1;
-	rRect.y -= 1;
-	rRect.h += 2;
-	rRect.w += 2;
+void OptionsMenu::Draw(sf::RenderWindow* rR) {
+	rRect.left += 1;
+	rRect.top += 1;
+	rRect.height -= 2;
+	rRect.width -= 2;
+	rRect.left -= 1;
+	rRect.top -= 1;
+	rRect.height += 2;
+	rRect.width += 2;
 
 	for(unsigned int i = 0; i < lMO.size(); i++) {
 		if(i == activeMenuOption) {
@@ -77,18 +72,10 @@ void OptionsMenu::Draw(SDL_Renderer* rR) {
 		}
 	}
 
-	SDL_SetRenderDrawColor(rR, 4, 4, 4, 245);
-	SDL_RenderFillRect(rR, &rVolumeBG);
 
-	SDL_SetRenderDrawColor(rR, activeMenuOption == 0 ? 150 : 90, activeMenuOption == 0 ? 150 : 90, activeMenuOption == 0 ? 150 : 90, 255);
-	SDL_RenderFillRect(rR, &rVolume);
 
 	if(activeMenuOption == 0) {
-		SDL_SetRenderDrawColor(rR, 255, 255, 255, 255);
-		SDL_RenderDrawRect(rR, &rVolumeBG);
 	} else {
-		SDL_SetRenderDrawColor(rR, 160, 160, 160, 55);
-		SDL_RenderDrawRect(rR, &rVolumeBG);
 	}
 
 	CCFG::getText()->Draw(rR, CCFG::getKeyString(CCFG::keyIDA), 185, 89, 16, activeMenuOption == 1 ? 255 : 90, activeMenuOption == 1 ? 255 : 90, activeMenuOption == 1 ? 255 : 90);
@@ -100,24 +87,19 @@ void OptionsMenu::Draw(SDL_Renderer* rR) {
 	CCFG::getText()->Draw(rR, CCFG::canMoveBackward ? "TRUE" : "FALSE", 357, 209, 16, activeMenuOption == 6 ? 255 : 90, activeMenuOption == 6 ? 255 : 90, activeMenuOption == 6 ? 255 : 90);
 
 	if(inSetKey) {
-		SDL_SetRenderDrawColor(rR, 20, 20, 20, 245);
-		SDL_RenderFillRect(rR, &rSetKeyRect);
-		SDL_SetRenderDrawColor(rR, 255, 255, 255, 255);
-		rSetKeyRect.x += 1;
-		rSetKeyRect.y += 1;
-		rSetKeyRect.h -= 2;
-		rSetKeyRect.w -= 2;
-		SDL_RenderDrawRect(rR, &rSetKeyRect);
-		rSetKeyRect.x -= 1;
-		rSetKeyRect.y -= 1;
-		rSetKeyRect.h += 2;
-		rSetKeyRect.w += 2;
+		rSetKeyRect.left += 1;
+		rSetKeyRect.top += 1;
+		rSetKeyRect.height -= 2;
+		rSetKeyRect.width -= 2;
+		rSetKeyRect.left -= 1;
+		rSetKeyRect.top -= 1;
+		rSetKeyRect.height += 2;
+		rSetKeyRect.width += 2;
 
-		CCFG::getText()->Draw(rR, "PRESS KEY FOR " + lMO[activeMenuOption]->getText(), 92, rSetKeyRect.y + 16, 16, 255, 255, 255);
-		CCFG::getText()->Draw(rR, "PRESS ESC TO CANCEL", 92, rSetKeyRect.y + 40, 16, 255, 255, 255);
+		CCFG::getText()->Draw(rR, "PRESS KEY FOR " + lMO[activeMenuOption]->getText(), 92, rSetKeyRect.top + 16, 16, 255, 255, 255);
+		CCFG::getText()->Draw(rR, "PRESS ESC TO CANCEL", 92, rSetKeyRect.top + 40, 16, 255, 255, 255);
 	}
 
-	SDL_SetRenderDrawBlendMode(rR, SDL_BLENDMODE_NONE);
 	CCore::getMap()->setBackgroundColor(rR);
 }
 
@@ -155,7 +137,7 @@ void OptionsMenu::escape() {
 }
 
 void OptionsMenu::setKey(int keyID) {
-	if(inSetKey && keyID != SDLK_KP_ENTER && keyID != SDLK_RETURN && keyID != SDLK_ESCAPE) {
+	if(inSetKey && keyID != sf::Keyboard::Enter && keyID != sf::Keyboard::Enter && keyID != sf::Keyboard::Escape) {
 		switch(activeMenuOption) {
 			case 1:
 				CCFG::keyIDA = keyID;
@@ -194,7 +176,7 @@ void OptionsMenu::setKey(int keyID) {
 				break;
 		}
 		resetSetKey = true;
-	} else if(keyID == SDLK_ESCAPE) {
+	} else if(keyID == sf::Keyboard::Escape) {
 		resetSetKey = true;
 	}
 }
@@ -228,7 +210,7 @@ void OptionsMenu::updateActiveButton(int iDir) {
 /* ******************************************** */
 
 void OptionsMenu::updateVolumeRect() {
-	rVolume.w = CCFG::getMusic()->getVolume()*2;
+	rVolume.width = CCFG::getMusic()->getVolume()*2;
 }
 
 void OptionsMenu::setEscapeToMainMenu(bool escapeToMainMenu) {

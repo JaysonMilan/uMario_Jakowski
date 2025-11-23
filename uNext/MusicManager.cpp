@@ -1,7 +1,7 @@
 /************************
- * @author £ukasz Jakowski
+ * @author ≈Åukasz Jakowski
  * @since  02.05.2014 16:13
- * 
+ *
  ************************/
 
 #include "MusicManager.h"
@@ -9,30 +9,40 @@
 /* ******************************************** */
 
 MusicManager::MusicManager(void) {
-	
 
-	
+
+
 }
 
 MusicManager::~MusicManager(void) {
-
+	for(unsigned int i = 0; i < vMusic.size(); i++) {
+		delete vMusic[i];
+	}
+	vMusic.clear();
 }
 
 /* ******************************************** */
 
 void MusicManager::PlayMusic() {
-	vMusic.push_back(Mix_LoadMUS("files/sounds/overworld.wav"));
-	vMusic.push_back(Mix_LoadMUS("files/sounds/overworld.wav"));
-	Mix_VolumeMusic(100);
-	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
-	Mix_PlayMusic(vMusic[0], -1);
+	vMusic.push_back(loadMusic("overworld"));
+	vMusic.push_back(loadMusic("overworld"));
+	if(vMusic.size() > 0 && vMusic[0] != nullptr) {
+		vMusic[0]->setVolume(100);
+		vMusic[0]->setLoop(true);
+		vMusic[0]->play();
+	}
 }
 
 /* ******************************************** */
 
-Mix_Music* MusicManager::loadMusic(std::string fileName) {
+sf::Music* MusicManager::loadMusic(std::string fileName) {
 	fileName = "files/sounds/" + fileName + ".wav";
-	return Mix_LoadMUS("files/sounds/overworld.wav");
+	sf::Music* music = new sf::Music();
+	if(!music->openFromFile(fileName)) {
+		delete music;
+		return nullptr;
+	}
+	return music;
 }
 
 /* ******************************************** */

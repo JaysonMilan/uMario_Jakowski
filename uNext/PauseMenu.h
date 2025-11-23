@@ -8,13 +8,13 @@
 class PauseMenu : public Menu
 {
 private:
-	SDL_Rect rPause;
+	sf::IntRect rPause;
 public:
 	PauseMenu(void);
 	~PauseMenu(void);
 
 	void Update();
-	void Draw(SDL_Renderer* rR);
+	void Draw(sf::RenderWindow* rR);
 
 	void enter();
 	void escape();

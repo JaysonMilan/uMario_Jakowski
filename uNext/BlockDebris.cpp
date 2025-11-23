@@ -54,7 +54,7 @@ void BlockDebris::Update() {
 	}
 }
 
-void BlockDebris::Draw(SDL_Renderer* rR) {
+void BlockDebris::Draw(sf::RenderWindow* rR) {
 	CCore::getMap()->getBlock(CCore::getMap()->getLevelType() == 0 || CCore::getMap()->getLevelType() == 4 ? 64 : CCore::getMap()->getLevelType() == 1 ? 65 : 66)->getSprite()->getTexture()->Draw(rR, vPositionL->getX() + (int)CCore::getMap()->getXPos(), vPositionL->getY(), bRotate);
 	CCore::getMap()->getBlock(CCore::getMap()->getLevelType() == 0 || CCore::getMap()->getLevelType() == 4 ? 64 : CCore::getMap()->getLevelType() == 1 ? 65 : 66)->getSprite()->getTexture()->Draw(rR, vPositionR->getX() + (int)CCore::getMap()->getXPos(), vPositionR->getY(), bRotate);
 	CCore::getMap()->getBlock(CCore::getMap()->getLevelType() == 0 || CCore::getMap()->getLevelType() == 4 ? 64 : CCore::getMap()->getLevelType() == 1 ? 65 : 66)->getSprite()->getTexture()->Draw(rR, vPositionL2->getX() + (int)CCore::getMap()->getXPos(), vPositionL2->getY(), bRotate);

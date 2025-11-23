@@ -27,7 +27,7 @@ void Beetle::Update() {
 	}
 }
 
-void Beetle::Draw(SDL_Renderer* rR, CIMG* iIMG) {
+void Beetle::Draw(sf::RenderWindow* rR, CIMG* iIMG) {
 	if(minionState != -2) {
 		iIMG->Draw(rR, (int)fXPos + (int)CCore::getMap()->getXPos(), (int)fYPos, !moveDirection);
 	} else {

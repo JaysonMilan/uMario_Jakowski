@@ -103,7 +103,7 @@ void Bowser::Update() {
 	}
 }
 
-void Bowser::Draw(SDL_Renderer* rR, CIMG* iIMG) {
+void Bowser::Draw(sf::RenderWindow* rR, CIMG* iIMG) {
 	iIMG->Draw(rR,(int)(fXPos + CCore::getMap()->getXPos()), (int)fYPos, !moveDirection);
 
 	if(spawnHammer) {

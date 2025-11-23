@@ -5,10 +5,10 @@
 /* ******************************************** */
 
 PauseMenu::PauseMenu(void) {
-	rPause.x = 220;
-	rPause.y = 140;
-	rPause.w = 360;
-	rPause.h = 142;
+	rPause.left = 220;
+	rPause.top = 140;
+	rPause.width = 360;
+	rPause.height = 142;
 
 	this->lMO.push_back(new MenuOption("RESUME", 0, 156));
 	this->lMO.push_back(new MenuOption("OPTIONS", 0, 180));
@@ -29,20 +29,15 @@ void PauseMenu::Update() {
 
 }
 
-void PauseMenu::Draw(SDL_Renderer* rR) {
-	SDL_SetRenderDrawBlendMode(rR, SDL_BLENDMODE_BLEND);
-	SDL_SetRenderDrawColor(rR, 4, 4, 4, 235);
-	SDL_RenderFillRect(rR, &rPause);
-	SDL_SetRenderDrawColor(rR, 255, 255, 255, 255);
-	rPause.x += 1;
-	rPause.y += 1;
-	rPause.h -= 2;
-	rPause.w -= 2;
-	SDL_RenderDrawRect(rR, &rPause);
-	rPause.x -= 1;
-	rPause.y -= 1;
-	rPause.h += 2;
-	rPause.w += 2;
+void PauseMenu::Draw(sf::RenderWindow* rR) {
+	rPause.left += 1;
+	rPause.top += 1;
+	rPause.height -= 2;
+	rPause.width -= 2;
+	rPause.left -= 1;
+	rPause.top -= 1;
+	rPause.height += 2;
+	rPause.width += 2;
 
 	for(unsigned int i = 0; i < lMO.size(); i++) {
 		if(i == activeMenuOption) {
@@ -52,7 +47,6 @@ void PauseMenu::Draw(SDL_Renderer* rR) {
 		}
 	}
 
-	SDL_SetRenderDrawBlendMode(rR, SDL_BLENDMODE_NONE);
 	CCore::getMap()->setBackgroundColor(rR);
 }
 

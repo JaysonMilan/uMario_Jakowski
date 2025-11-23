@@ -89,7 +89,7 @@ public:
 
 	// ----- Methods
 
-	void Draw(SDL_Renderer* rR);
+	void Draw(sf::RenderWindow* rR);
 
 	void Animation();
 	void newLevel();

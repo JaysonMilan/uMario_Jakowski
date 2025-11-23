@@ -4,12 +4,12 @@
 /* ******************************************** */
 
 Console::Console(void) {
-	rRect.x = 5;
-	rRect.y = 5;
-	rRect.w = 175;
-	rRect.h = 105;
+	rRect.left = 5;
+	rRect.top = 5;
+	rRect.width = 175;
+	rRect.height = 105;
 
-	this->iMax = (rRect.h - rRect.y)/12;
+	this->iMax = (rRect.height - rRect.top)/12;
 }
 
 Console::~Console(void) {
@@ -18,20 +18,13 @@ Console::~Console(void) {
 
 /* ******************************************** */
 
-void Console::Draw(SDL_Renderer* rR) {
+void Console::Draw(sf::RenderWindow* rR) {
 	if(vPrint.size() > 0) {
-		SDL_SetRenderDrawBlendMode(rR, SDL_BLENDMODE_BLEND);
-		SDL_SetRenderDrawColor(rR, 4, 4, 4, 128);
-		SDL_RenderFillRect(rR, &rRect);
-		SDL_SetRenderDrawColor(rR, 255, 255, 255, 128);
-		SDL_RenderDrawRect(rR, &rRect);
-		SDL_SetRenderDrawColor(rR, 255, 255, 255, 255);
 	
 		for(int i = vPrint.size() - 1, j = 0; i >= 0; i--, j++) {
-			CCFG::getText()->Draw(rR, vPrint[i], rRect.x + rRect.w - 5 - CCFG::getText()->getTextWidth(vPrint[i], 8), rRect.y + rRect.h - 5 - 8*(j+1) - 4*j, 8);
+			CCFG::getText()->Draw(rR, vPrint[i], rRect.left + rRect.width - 5 - CCFG::getText()->getTextWidth(vPrint[i], 8), rRect.top + rRect.height - 5 - 8*(j+1) - 4*j, 8);
 		}
 
-		SDL_SetRenderDrawBlendMode(rR, SDL_BLENDMODE_NONE);
 	}
 }
 

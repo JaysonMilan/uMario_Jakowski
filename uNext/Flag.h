@@ -25,8 +25,8 @@ public:
 
 	void Update();
 	void UpdateCastleFlag();
-	void Draw(SDL_Renderer* rR, CIMG* iIMG);
-	void DrawCastleFlag(SDL_Renderer* rR, CIMG* iIMG);
+	void Draw(sf::RenderWindow* rR, CIMG* iIMG);
+	void DrawCastleFlag(sf::RenderWindow* rR, CIMG* iIMG);
 };
 
 #endif

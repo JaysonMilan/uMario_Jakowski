@@ -22,12 +22,12 @@ void Goombas::Update() {
 		updateXPos();
 	} else if(minionState == -2) {
 		Minion::minionDeathAnimation();
-	} else if (SDL_GetTicks() - 500 >= (unsigned)deadTime) {
+	} else if (CCFG::getTicks() - 500 >= (unsigned)deadTime) {
 		minionState = -1;
 	}
 }
 
-void Goombas::Draw(SDL_Renderer* rR, CIMG* iIMG) {
+void Goombas::Draw(sf::RenderWindow* rR, CIMG* iIMG) {
 	if(minionState != -2) {
 		iIMG->Draw(rR, (int)fXPos + (int)CCore::getMap()->getXPos(), (int)fYPos + 2, false);
 	} else {
@@ -44,7 +44,7 @@ void Goombas::collisionWithPlayer(bool TOP) {
 		if(minionState == 0) {
 			minionState = 1;
 			iBlockID = CCore::getMap()->getLevelType() == 0 || CCore::getMap()->getLevelType() == 4 ? 1 : CCore::getMap()->getLevelType() == 1 ? 9 : 11;
-			deadTime = SDL_GetTicks();
+			deadTime = CCFG::getTicks();
 			CCore::getMap()->getPlayer()->resetJump();
 			CCore::getMap()->getPlayer()->startJump(1);
 			points(100);
@@ -61,7 +61,7 @@ void Goombas::setMinionState(int minionState) {
 	this->minionState = minionState;
 
 	if (this->minionState == 1) {
-		deadTime = SDL_GetTicks();
+		deadTime = CCFG::getTicks();
 	}
 
 	Minion::setMinionState(minionState);

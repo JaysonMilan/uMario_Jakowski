@@ -8,10 +8,10 @@
 class OptionsMenu : public Menu
 {
 private:
-	SDL_Rect rRect;
-	SDL_Rect rSetKeyRect;
-	SDL_Rect rVolumeBG;
-	SDL_Rect rVolume;
+	sf::IntRect rRect;
+	sf::IntRect rSetKeyRect;
+	sf::IntRect rVolumeBG;
+	sf::IntRect rVolume;
 
 	bool inSetKey, resetSetKey;
 
@@ -21,7 +21,7 @@ public:
 	~OptionsMenu(void);
 
 	void Update();
-	void Draw(SDL_Renderer* rR);
+	void Draw(sf::RenderWindow* rR);
 
 	void enter();
 	void escape();

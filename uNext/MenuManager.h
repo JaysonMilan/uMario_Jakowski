@@ -42,9 +42,10 @@ public:
 	gameState currentGameState;
 
 	void Update();
-	void Draw(SDL_Renderer* rR);
+	void Draw(sf::RenderWindow* rR);
 
-	void setBackgroundColor(SDL_Renderer* rR);
+	void setBackgroundColor(sf::RenderWindow* rR);
+	sf::Color getBackgroundColor();
 
 	void enter();
 	void escape();
@@ -57,7 +58,7 @@ public:
 	void setViewID(gameState viewID);
 
 	CIMG* getActiveOption();
-	void setActiveOption(SDL_Renderer* rR);
+	void setActiveOption(sf::RenderWindow* rR);
 
 	LoadingMenu* getLoadingMenu();
 	AboutMenu* getAboutMenu();

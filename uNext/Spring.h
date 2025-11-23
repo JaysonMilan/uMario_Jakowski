@@ -17,7 +17,7 @@ public:
 	~Spring(void);
 
 	void Update();
-	void Draw(SDL_Renderer* rR, CIMG* iIMG);
+	void Draw(sf::RenderWindow* rR, CIMG* iIMG);
 
 	void minionPhysics();
 

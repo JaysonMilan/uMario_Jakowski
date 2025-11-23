@@ -29,7 +29,7 @@ CheepSpawner::~CheepSpawner(void) {
 /* ******************************************** */
 
 void CheepSpawner::Update() {
-	if(iSpawnTime < SDL_GetTicks()) {
+	if(iSpawnTime < CCFG::getTicks()) {
 		spawnCheep();
 		nextCheep();
 	}
@@ -48,5 +48,5 @@ void CheepSpawner::spawnCheep() {
 }
 
 void CheepSpawner::nextCheep() {
-	iSpawnTime = SDL_GetTicks() + 675 + rand()%1025;
+	iSpawnTime = CCFG::getTicks() + 675 + rand()%1025;
 }

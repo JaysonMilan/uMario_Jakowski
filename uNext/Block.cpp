@@ -19,7 +19,7 @@ Block::~Block(void) {
 
 /* ******************************************** */
 
-void Block::Draw(SDL_Renderer* rR, int iOffsetX, int iOffsetY) {
+void Block::Draw(sf::RenderWindow* rR, int iOffsetX, int iOffsetY) {
 	sSprite->getTexture()->Draw(rR, iOffsetX, iOffsetY);
 }
 

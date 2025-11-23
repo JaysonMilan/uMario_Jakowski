@@ -60,7 +60,7 @@ void FireBall::Update() {
 	}
 }
 
-void FireBall::Draw(SDL_Renderer* rR, CIMG* iIMG) {
+void FireBall::Draw(sf::RenderWindow* rR, CIMG* iIMG) {
 	iIMG->Draw(rR, (int)(fXPos + CCore::getMap()->getXPos()), (int)fYPos);
 }
 

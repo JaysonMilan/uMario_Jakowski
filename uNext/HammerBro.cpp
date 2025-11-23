@@ -115,7 +115,7 @@ void HammerBro::Update() {
 	}
 }
 
-void HammerBro::Draw(SDL_Renderer* rR, CIMG* iIMG) {
+void HammerBro::Draw(sf::RenderWindow* rR, CIMG* iIMG) {
 	if(minionState != -2) {
 		iIMG->Draw(rR, (int)fXPos + (int)CCore::getMap()->getXPos(), (int)fYPos - 18, moveDirection);
 	} else {

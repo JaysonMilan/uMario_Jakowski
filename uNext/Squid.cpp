@@ -65,7 +65,7 @@ void Squid::Update() {
 	}
 }
 
-void Squid::Draw(SDL_Renderer* rR, CIMG* iIMG) {
+void Squid::Draw(sf::RenderWindow* rR, CIMG* iIMG) {
 	iIMG->Draw(rR,(int)(fXPos + CCore::getMap()->getXPos()), (int)fYPos);
 }
 

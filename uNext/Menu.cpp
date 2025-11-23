@@ -18,7 +18,7 @@ void Menu::Update() {
 
 }
 
-void Menu::Draw(SDL_Renderer* rR) {
+void Menu::Draw(sf::RenderWindow* rR) {
 	for(unsigned int i = 0; i < lMO.size(); i++) {
 		CCFG::getText()->Draw(rR, lMO[i]->getText(), lMO[i]->getXPos(), lMO[i]->getYPos());
 	}

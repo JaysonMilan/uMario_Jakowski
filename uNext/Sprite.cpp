@@ -1,10 +1,11 @@
 #include "Sprite.h"
+#include "CFG.h"
 
 /* ******************************************** */
 
 Sprite::Sprite(void) { }
 
-Sprite::Sprite(SDL_Renderer* rR, std::vector<std::string> sSprite, std::vector<unsigned int> iDelay, bool bRotate) {
+Sprite::Sprite(sf::RenderWindow* rR, std::vector<std::string> sSprite, std::vector<unsigned int> iDelay, bool bRotate) {
 	this->iDelay = iDelay;
 	this->bRotate = bRotate;
 
@@ -28,8 +29,8 @@ Sprite::~Sprite(void) {
 /* ******************************************** */
 
 void Sprite::Update() {
-	if(SDL_GetTicks() - iDelay[iCurrentFrame] > lTimePassed) {
-		lTimePassed = SDL_GetTicks();
+	if(CCFG::getTicks() - iDelay[iCurrentFrame] > lTimePassed) {
+		lTimePassed = CCFG::getTicks();
 
 		if(iCurrentFrame == iEndFrame) {
 			iCurrentFrame = 0;

@@ -109,12 +109,12 @@ void Koppa::Update() {
 		updateXPos();
 	} else if(minionState == -2) {
 		Minion::minionDeathAnimation();
-	} else if (minionState != 3 && SDL_GetTicks() - 500 >= (unsigned)deadTime) {
+	} else if (minionState != 3 && CCFG::getTicks() - 500 >= (unsigned)deadTime) {
 		minionState = -1;
 	}
 }
 
-void Koppa::Draw(SDL_Renderer* rR, CIMG* iIMG) {
+void Koppa::Draw(sf::RenderWindow* rR, CIMG* iIMG) {
 	if(minionState != -2) {
 		iIMG->Draw(rR, (int)fXPos + (int)CCore::getMap()->getXPos(), (int)fYPos + (minionState <= 1 ? -14 : 2), !moveDirection);
 	} else {
@@ -228,7 +228,7 @@ void Koppa::setMinionState(int minionState) {
 	this->minionState = minionState;
 
 	if (this->minionState == 3) {
-		deadTime = SDL_GetTicks();
+		deadTime = CCFG::getTicks();
 	}
 
 	Minion::setMinionState(minionState);

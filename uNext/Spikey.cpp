@@ -31,7 +31,7 @@ void Spikey::Update() {
 	}
 }
 
-void Spikey::Draw(SDL_Renderer* rR, CIMG* iIMG) {
+void Spikey::Draw(sf::RenderWindow* rR, CIMG* iIMG) {
 	if(minionState != -2) {
 		iIMG->Draw(rR, (int)fXPos + (int)CCore::getMap()->getXPos(), (int)fYPos - 4, !moveDirection);
 	} else {

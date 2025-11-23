@@ -16,7 +16,7 @@ LoadingMenu::~LoadingMenu(void) {
 /* ******************************************** */
 
 void LoadingMenu::Update() {
-	if(SDL_GetTicks() >= iTime + 2500 + (loadingType ? 0 : 2750)) {
+	if(CCFG::getTicks() >= iTime + 2500 + (loadingType ? 0 : 2750)) {
 		if(loadingType) {
 			if(!CCore::getMap()->getInEvent()) {
 				CCore::getMap()->setSpawnPoint();
@@ -34,7 +34,7 @@ void LoadingMenu::Update() {
 	CCore::getMap()->UpdateBlocks();
 }
 
-void LoadingMenu::Draw(SDL_Renderer* rR) {
+void LoadingMenu::Draw(sf::RenderWindow* rR) {
 	if(loadingType) {
 		CCore::getMap()->DrawGameLayout(rR);
 		CCFG::getText()->Draw(rR, "WORLD", 320, 144);
@@ -58,5 +58,5 @@ void LoadingMenu::Draw(SDL_Renderer* rR) {
 /* ******************************************** */
 
 void LoadingMenu::updateTime() {
-	this->iTime = SDL_GetTicks();
+	this->iTime = CCFG::getTicks();
 }

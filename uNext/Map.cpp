@@ -10,7 +10,7 @@ Map::Map(void) {
 
 }
 
-Map::Map(SDL_Renderer* rR) {
+Map::Map(sf::RenderWindow* rR) {
 	oPlayer = new Player(rR, 84, 368);
 
 	this->currentLevelID = 0;
@@ -354,7 +354,7 @@ void Map::UpdateMinionBlokcs() {
 
 /* ******************************************** */
 
-void Map::Draw(SDL_Renderer* rR) {
+void Map::Draw(sf::RenderWindow* rR) {
 	DrawMap(rR);
 
 	for(unsigned int i = 0; i < vPlatform.size(); i++) {
@@ -397,7 +397,7 @@ void Map::Draw(SDL_Renderer* rR) {
 	DrawGameLayout(rR);
 }
 
-void Map::DrawMap(SDL_Renderer* rR) {
+void Map::DrawMap(sf::RenderWindow* rR) {
 	if(oFlag != NULL) {
 		oFlag->DrawCastleFlag(rR, vBlock[51]->getSprite()->getTexture());
 	}
@@ -415,7 +415,7 @@ void Map::DrawMap(SDL_Renderer* rR) {
 	}
 }
 
-void Map::DrawMinions(SDL_Renderer* rR) {
+void Map::DrawMinions(sf::RenderWindow* rR) {
 	for(int i = 0; i < iMinionListSize; i++) {
 		for(int j = 0, jSize = lMinion[i].size(); j < jSize; j++) {
 			lMinion[i][j]->Draw(rR, vMinion[lMinion[i][j]->getBloockID()]->getSprite()->getTexture());
@@ -424,7 +424,7 @@ void Map::DrawMinions(SDL_Renderer* rR) {
 	}
 }
 
-void Map::DrawGameLayout(SDL_Renderer* rR) {
+void Map::DrawGameLayout(sf::RenderWindow* rR) {
 	CCFG::getText()->Draw(rR, "MARIO", 54, 16);
 
 	if(oPlayer->getScore() < 100) {
@@ -462,16 +462,12 @@ void Map::DrawGameLayout(SDL_Renderer* rR) {
 	}
 }
 
-void Map::DrawLines(SDL_Renderer* rR) {
-	SDL_SetRenderDrawBlendMode(rR, SDL_BLENDMODE_BLEND); // APLHA ON !
-	SDL_SetRenderDrawColor(rR, 255, 255, 255, 128);
+void Map::DrawLines(sf::RenderWindow* rR) {
 
 	for(int i = 0; i < CCFG::GAME_WIDTH / 32 + 1; i++) {
-		SDL_RenderDrawLine(rR, 32 * i - (-(int)fXPos) % 32, 0, 32 * i - (-(int)fXPos) % 32, CCFG::GAME_HEIGHT);
 	}
 
 	for(int i = 0; i < CCFG::GAME_HEIGHT / 32 + 1; i++) {
-		SDL_RenderDrawLine(rR, 0, 32 * i - 16 + (int)fYPos, CCFG::GAME_WIDTH, 32 * i - 16 + (int)fYPos);
 	}
 
 	for(int i = 0; i < CCFG::GAME_WIDTH / 32 + 1; i++) {
@@ -481,7 +477,6 @@ void Map::DrawLines(SDL_Renderer* rR) {
 		}
 	}
 
-	SDL_SetRenderDrawBlendMode(rR, SDL_BLENDMODE_NONE); // APLHA OFF !
 }
 
 /* ******************************************** */
@@ -732,7 +727,7 @@ int Map::getNumOfMinions() {
 
 /* ---------- LOAD GAME DATA ---------- */
 
-void Map::loadGameData(SDL_Renderer* rR) {
+void Map::loadGameData(sf::RenderWindow* rR) {
 	std::vector<std::string> tSprite;
 	std::vector<unsigned int> iDelay;
 	
@@ -2436,16 +2431,13 @@ void Map::clearBubbles() {
 
 /* ******************************************** */
 
-void Map::setBackgroundColor(SDL_Renderer* rR) {
+void Map::setBackgroundColor(sf::RenderWindow* rR) {
 	switch(iLevelType) {
 		case 0: case 2:
-			SDL_SetRenderDrawColor(rR, 93, 148, 252, 255);
 			break;
 		case 1: case 3: case 4:
-			SDL_SetRenderDrawColor(rR, 0, 0, 0, 255);
 			break;
 		default:
-			SDL_SetRenderDrawColor(rR, 93, 148, 252, 255);
 			break;
 	}
 }

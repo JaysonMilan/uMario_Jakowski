@@ -22,7 +22,7 @@ public:
 	~Coin(void);
 
 	void Update();
-	void Draw(SDL_Renderer* rR);
+	void Draw(sf::RenderWindow* rR);
 
 	int getXPos();
 	int getYPos();

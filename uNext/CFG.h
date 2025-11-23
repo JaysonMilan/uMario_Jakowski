@@ -14,6 +14,7 @@ private:
 	static Text* oText;
 	static CIMG* tSMBLOGO;
 	static Music* oMusic;
+	static sf::Clock* gameClock;
 public:
 	CCFG(void);
 	~CCFG(void);
@@ -32,6 +33,8 @@ public:
 
 	static MenuManager* getMM();
 	static Music* getMusic();
+
+	static unsigned long getTicks();
 
 	static bool canMoveBackward;
 };

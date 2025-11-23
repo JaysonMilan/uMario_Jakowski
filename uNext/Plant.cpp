@@ -13,7 +13,7 @@ Plant::Plant(int fXPos, int fYPos, int iBlockID) {
 	this->iBlockID = iBlockID;
 
 	this->bWait = true;
-	this->iTime = SDL_GetTicks();
+	this->iTime = CCFG::getTicks();
 
 	this->lockPlant = false;
 
@@ -36,10 +36,10 @@ void Plant::Update() {
 	lockPlant = CCore::getMap()->getPlayer()->getXPos() - CCore::getMap()->getXPos() >= fXPos - 48 && CCore::getMap()->getPlayer()->getXPos() - CCore::getMap()->getXPos() <= fXPos + iHitBoxX + 48;
 
 	if(bWait) {
-		if((!lockPlant || !moveDirection) && iTime + (moveDirection ? 1000 : 985) <= SDL_GetTicks()) {
+		if((!lockPlant || !moveDirection) && iTime + (moveDirection ? 1000 : 985) <= CCFG::getTicks()) {
 			bWait = false;
 		} else if(lockPlant && moveDirection) {
-			iTime = SDL_GetTicks();
+			iTime = CCFG::getTicks();
 		}
 	} else if(moveDirection) {
 		if(iLength > 0) {
@@ -49,7 +49,7 @@ void Plant::Update() {
 			moveDirection = false;
 			iLength = 50;
 			bWait = true;
-			iTime = SDL_GetTicks();
+			iTime = CCFG::getTicks();
 		}
 	} else {
 		if(iLength > 0) {
@@ -59,12 +59,12 @@ void Plant::Update() {
 			moveDirection = true;
 			iLength = 50;
 			bWait = true;
-			iTime = SDL_GetTicks();
+			iTime = CCFG::getTicks();
 		}
 	}
 }
 
-void Plant::Draw(SDL_Renderer* rR, CIMG* iIMG) {
+void Plant::Draw(sf::RenderWindow* rR, CIMG* iIMG) {
 	iIMG->Draw(rR, (int)(fXPos + CCore::getMap()->getXPos()) - 2, (int)fYPos - 6, false);
 
 	for(int i = 0; i < 3; i++) {
@@ -101,7 +101,7 @@ void Plant::lockMinion() {
 	iLength = 50;
 	lockPlant = true;
 	bWait = true;
-	iTime = SDL_GetTicks();
+	iTime = CCFG::getTicks();
 }
 
 void Plant::setMinionState(int minionState) {

@@ -101,7 +101,7 @@ void Platform::Update() {
 	}
 }
 
-void Platform::Draw(SDL_Renderer* rR) {
+void Platform::Draw(sf::RenderWindow* rR) {
 	if(iType == 6 || iType == 7) { // -- iXStart = YPos 2
 		for(int i = 1; i < (iXStart - iYEnd)/16 + 2; i++) {
 			CCore::getMap()->getBlock(CCore::getMap()->getCurrentLevelID() == 22 ? 165 : 135)->getSprite()->getTexture()->Draw(rR, (int)(iXEnd + (int)CCore::getMap()->getXPos() + (iSize*8)/2 + 16 - (iSize/2%2 == 0 ? 8 : 0)), (int)(iXStart - 16*i));

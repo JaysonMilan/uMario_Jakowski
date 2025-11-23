@@ -23,7 +23,7 @@ private:
 
 public:
 	Sprite(void);
-	Sprite(SDL_Renderer* rR, std::vector<std::string> tSprite, std::vector<unsigned int> iDelay, bool bRotate);
+	Sprite(sf::RenderWindow* rR, std::vector<std::string> tSprite, std::vector<unsigned int> iDelay, bool bRotate);
 	~Sprite(void);
 
 	void Update();

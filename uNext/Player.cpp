@@ -5,7 +5,7 @@
 
 /* ******************************************** */
 
-Player::Player(SDL_Renderer* rR, float fXPos, float fYPos) {
+Player::Player(sf::RenderWindow* rR, float fXPos, float fYPos) {
 	this->fXPos = fXPos;
 	this->fYPos = fYPos;
 	this->iNumOfLives = 3;
@@ -40,7 +40,7 @@ Player::Player(SDL_Renderer* rR, float fXPos, float fYPos) {
 
 	this->springJump = false;
 
-	this->iTimePassed = SDL_GetTicks();
+	this->iTimePassed = CCFG::getTicks();
 
 	this->jumpState = 0;
 	this->startJumpSpeed = 7.65f;
@@ -453,9 +453,9 @@ void Player::playerPhysics() {
 			}
 		}
 	} else {
-		if(nextBubbleTime + 685 < SDL_GetTicks()) {
+		if(nextBubbleTime + 685 < CCFG::getTicks()) {
 			CCore::getMap()->addBubble((int)(fXPos - CCore::getMap()->getXPos() + (moveDirection ? getHitBoxX() - rand()%8 : rand()%8)), (int)fYPos + 4);
-			nextBubbleTime = SDL_GetTicks() + rand()%715;
+			nextBubbleTime = CCFG::getTicks() + rand()%715;
 		}
 
 		if (jumpState == 1) {
@@ -505,17 +505,17 @@ void Player::movePlayer() {
 		if (moveSpeed > currentMaxMove) {
 			--moveSpeed;
 		}
-		else if (SDL_GetTicks() - (100 + 35 * moveSpeed) >= iTimePassed && moveSpeed < currentMaxMove) {
+		else if (CCFG::getTicks() - (100 + 35 * moveSpeed) >= iTimePassed && moveSpeed < currentMaxMove) {
 			++moveSpeed;
-			iTimePassed = SDL_GetTicks();
+			iTimePassed = CCFG::getTicks();
 		}
 		else if (moveSpeed == 0) {
 			moveSpeed = 1;
 		}
 	} else {
-		if (SDL_GetTicks() - (50 + 15 * (currentMaxMove - moveSpeed) * (bSquat && powerLVL > 0 ? 6 : 1)) > iTimePassed && moveSpeed != 0) {
+		if (CCFG::getTicks() - (50 + 15 * (currentMaxMove - moveSpeed) * (bSquat && powerLVL > 0 ? 6 : 1)) > iTimePassed && moveSpeed != 0) {
 			--moveSpeed;
-			iTimePassed = SDL_GetTicks();
+			iTimePassed = CCFG::getTicks();
 			if (jumpState == 0 && !CCore::getMap()->getUnderWater()) setMarioSpriteID(6);
 		}
 		
@@ -635,8 +635,8 @@ void Player::powerUPAnimation() {
 }
 
 void Player::moveAnimation() {
-	if(SDL_GetTicks() - 65 + moveSpeed * 4 > iMoveAnimationTime) {
-		iMoveAnimationTime = SDL_GetTicks();
+	if(CCFG::getTicks() - 65 + moveSpeed * 4 > iMoveAnimationTime) {
+		iMoveAnimationTime = CCFG::getTicks();
 		if (iSpriteID >= 4 + 11 * powerLVL) {
 			setMarioSpriteID(2);
 		}
@@ -647,8 +647,8 @@ void Player::moveAnimation() {
 }
 
 void Player::swimingAnimation() {
-	if(SDL_GetTicks() - 105 > iMoveAnimationTime) {
-		iMoveAnimationTime = SDL_GetTicks();
+	if(CCFG::getTicks() - 105 > iMoveAnimationTime) {
+		iMoveAnimationTime = CCFG::getTicks();
 		if(iSpriteID % 11 == 8) {
 			setMarioSpriteID(9);
 		} else {
@@ -658,8 +658,8 @@ void Player::swimingAnimation() {
 }
 
 void Player::startMove() {
-	iMoveAnimationTime = SDL_GetTicks();
-	iTimePassed = SDL_GetTicks();
+	iMoveAnimationTime = CCFG::getTicks();
+	iTimePassed = CCFG::getTicks();
 	moveSpeed = 1;
 	bMove = true;
 	if(CCore::getMap()->getUnderWater()) {
@@ -720,7 +720,7 @@ void Player::startJump(int iH) {
 		setMarioSpriteID(5);
 	} else {
 		if(jumpState == 0) {
-			iMoveAnimationTime = SDL_GetTicks();
+			iMoveAnimationTime = CCFG::getTicks();
 			setMarioSpriteID(8);
 			swimingAnimation();
 		}
@@ -1003,7 +1003,7 @@ Vector2* Player::getBlockRT(float nX, float nY) {
 
 /* ******************************************** */
 
-void Player::Draw(SDL_Renderer* rR) {
+void Player::Draw(sf::RenderWindow* rR) {
 	if(!inLevelDownAnimation || CCore::getMap()->getInEvent()) {
 		sMario[getMarioSpriteID()]->getTexture()->Draw(rR, (int)fXPos, (int)fYPos + (CCore::getMap()->getInEvent() ? 0 : 2), !moveDirection);
 	} else {

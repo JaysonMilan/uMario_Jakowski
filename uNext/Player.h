@@ -100,10 +100,10 @@ private:
 	Vector2* getBlockLT(float nX, float nY);
 	Vector2* getBlockRT(float nX, float nY);
 public:
-	Player(SDL_Renderer* rR, float fXPos, float fYPos);
+	Player(sf::RenderWindow* rR, float fXPos, float fYPos);
 	~Player(void);
 
-	void Draw(SDL_Renderer* rR);
+	void Draw(sf::RenderWindow* rR);
 	void Update();
 
 	void playerPhysics();

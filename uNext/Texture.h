@@ -1,8 +1,7 @@
 #pragma once
 
 #include <string>
-#include <SDL.h>
-#include <SDL_image.h>
+#include <SFML/Graphics.hpp>
 
 class Texture
 {
@@ -13,9 +12,9 @@ public:
 	void Draw();
 	void Draw(int offsetX, int offsetY);
 
-	SDL_Texture* getTexture();
+	sf::Texture* getTexture();
 private:
-	SDL_Texture* texture;
+	sf::Texture* texture;
 
 
 };

@@ -27,7 +27,7 @@ public:
 	~BlockDebris(void);
 
 	void Update();
-	void Draw(SDL_Renderer* rR);
+	void Draw(sf::RenderWindow* rR);
 
 	int getDebrisState();
 };

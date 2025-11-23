@@ -1,12 +1,9 @@
 #include "Music.h"
 #include "Core.h"
-#include <SDL3_mixer/SDL_mixer.h>
 
 /* ******************************************** */
 
 Music::Music(void) {
-	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
-
 	vMusic.push_back(loadMusic("overworld"));
 	vMusic.push_back(loadMusic("overworld-fast"));
 	vMusic.push_back(loadMusic("underground"));
@@ -56,13 +53,19 @@ Music::Music(void) {
 
 Music::~Music(void) {
 	for(unsigned int i = 0; i < vMusic.size(); i++) {
-		Mix_FreeMusic(vMusic[i]);
+		delete vMusic[i];
 	}
 
 	vMusic.clear();
 
+	for(unsigned int i = 0; i < vChunkBuffers.size(); i++) {
+		delete vChunkBuffers[i];
+	}
+
+	vChunkBuffers.clear();
+
 	for(unsigned int i = 0; i < vChunk.size(); i++) {
-		Mix_FreeChunk(vChunk[i]);
+		delete vChunk[i];
 	}
 
 	vChunk.clear();
@@ -112,7 +115,10 @@ void Music::changeMusic(bool musicByLevel, bool forceChange) {
 
 void Music::PlayMusic() {
 	if(currentMusic != mNOTHING) {
-		Mix_PlayMusic(vMusic[currentMusic - 1], -1);
+		sf::Music* music = vMusic[currentMusic - 1];
+		music->setLoop(true);
+		music->setVolume(iVolume);
+		music->play();
 		musicStopped = false;
 	} else {
 		StopMusic();
@@ -121,7 +127,10 @@ void Music::PlayMusic() {
 
 void Music::PlayMusic(eMusic musicID) {
 	if(musicID != mNOTHING) {
-		Mix_PlayMusic(vMusic[musicID - 1], -1);
+		sf::Music* music = vMusic[musicID - 1];
+		music->setLoop(true);
+		music->setVolume(iVolume);
+		music->play();
 		musicStopped = false;
 		currentMusic = musicID;
 	} else {
@@ -132,38 +141,60 @@ void Music::PlayMusic(eMusic musicID) {
 
 void Music::StopMusic() {
 	if(!musicStopped) {
-		Mix_HaltMusic();
+		for(unsigned int i = 0; i < vMusic.size(); i++) {
+			vMusic[i]->stop();
+		}
 		musicStopped = true;
 	}
 }
 
 void Music::PauseMusic() {
-	if(Mix_PausedMusic() == 1) {
-		Mix_ResumeMusic();
-		musicStopped = false;
-	} else {
-		Mix_PauseMusic();
-		musicStopped = true;
+	if(currentMusic != mNOTHING) {
+		sf::Music* music = vMusic[currentMusic - 1];
+		if(music->getStatus() == sf::Music::Paused) {
+			music->play();
+			musicStopped = false;
+		} else if(music->getStatus() == sf::Music::Playing) {
+			music->pause();
+			musicStopped = true;
+		}
 	}
 }
 
 /* ******************************************** */
 
 void Music::PlayChunk(eChunk chunkID) {
-	Mix_VolumeChunk(vChunk[chunkID], iVolume);
-	Mix_PlayChannel(-1, vChunk[chunkID], 0);
+	if(chunkID < vChunk.size()) {
+		sf::Sound* sound = vChunk[chunkID];
+		sound->setVolume(iVolume);
+		sound->play();
+	}
 }
 
 /* ******************************************** */
 
-Mix_Music* Music::loadMusic(std::string fileName) {
+sf::Music* Music::loadMusic(std::string fileName) {
 	fileName = "files/sounds/" + fileName + ".wav";
-	return Mix_LoadMUS(fileName.c_str());
+	sf::Music* music = new sf::Music();
+	if(!music->openFromFile(fileName)) {
+		delete music;
+		return nullptr;
+	}
+	return music;
 }
 
-Mix_Chunk* Music::loadChunk(std::string fileName) {
+sf::Sound* Music::loadChunk(std::string fileName) {
 	fileName = "files/sounds/" + fileName + ".wav";
-	return Mix_LoadWAV(fileName.c_str());
+	sf::SoundBuffer* buffer = new sf::SoundBuffer();
+	if(!buffer->loadFromFile(fileName)) {
+		delete buffer;
+		return nullptr;
+	}
+	vChunkBuffers.push_back(buffer);
+
+	sf::Sound* sound = new sf::Sound();
+	sound->setBuffer(*buffer);
+	return sound;
 }
 
 int Music::getVolume() {
@@ -172,5 +203,7 @@ int Music::getVolume() {
 
 void Music::setVolume(int iVolume) {
 	this->iVolume = iVolume;
-	Mix_VolumeMusic(iVolume);
+	for(unsigned int i = 0; i < vMusic.size(); i++) {
+		vMusic[i]->setVolume(iVolume);
+	}
 }
