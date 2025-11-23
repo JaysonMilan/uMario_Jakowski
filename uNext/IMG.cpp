@@ -18,7 +18,7 @@ void CIMG::Draw(SDL_Renderer* rR, int iXOffset, int iYOffset) {
 	rRect.x = iXOffset;
 	rRect.y = iYOffset;
 
-	SDL_RenderCopy(rR, tIMG, NULL, &rRect);
+	SDL_RenderTexture(rR, tIMG, NULL, &rRect);
 }
 
 void CIMG::Draw(SDL_Renderer* rR, int iXOffset, int iYOffset, bool bRotate) {
@@ -26,9 +26,9 @@ void CIMG::Draw(SDL_Renderer* rR, int iXOffset, int iYOffset, bool bRotate) {
 	rRect.y = iYOffset;
 
 	if(!bRotate) {
-		SDL_RenderCopy(rR, tIMG, NULL, &rRect);
+		SDL_RenderTexture(rR, tIMG, NULL, &rRect);
 	} else {
-		SDL_RenderCopyEx(rR, tIMG, NULL, &rRect, 180.0, NULL, SDL_FLIP_VERTICAL);
+		SDL_RenderTextureRotated(rR, tIMG, NULL, &rRect, 180.0, NULL, SDL_FLIP_VERTICAL);
 	}
 }
 
@@ -36,11 +36,11 @@ void CIMG::DrawVert(SDL_Renderer* rR, int iXOffset, int iYOffset) {
 	rRect.x = iXOffset;
 	rRect.y = iYOffset;
 
-	SDL_RenderCopyEx(rR, tIMG, NULL, &rRect, 180.0, NULL, SDL_FLIP_HORIZONTAL);
+	SDL_RenderTextureRotated(rR, tIMG, NULL, &rRect, 180.0, NULL, SDL_FLIP_HORIZONTAL);
 }
 
 void CIMG::Draw(SDL_Renderer* rR, SDL_Rect rCrop, SDL_Rect rRect) {
-	SDL_RenderCopy(rR, tIMG, &rCrop, &rRect);
+	SDL_RenderTexture(rR, tIMG, &rCrop, &rRect);
 }
 
 /* ******************************************** */

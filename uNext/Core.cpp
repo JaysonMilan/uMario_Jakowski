@@ -3,7 +3,7 @@
 #include "IMG.h"
 #include "CFG.h"
 #include "Text.h"
-#include "SDL_mixer.h"
+#include <SDL3_mixer/SDL_mixer.h>
 
 /* ******************************************** */
 
@@ -38,7 +38,7 @@ CCore::CCore(void) {
 		quitGame = true;
 	}
 
-	rR = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+	rR = SDL_CreateRenderer(window, NULL);
 
 	// ----- ICO
 	std::string fileName = "files/images/ico.bmp";
@@ -65,9 +65,9 @@ CCore::CCore(void) {
 
 	this->mouseX = this->mouseY = 0;
 
-	CCFG::keyIDA = SDLK_a;
-	CCFG::keyIDS = SDLK_s;
-	CCFG::keyIDD = SDLK_d;
+	CCFG::keyIDA = SDLK_A;
+	CCFG::keyIDS = SDLK_S;
+	CCFG::keyIDD = SDLK_D;
 	CCFG::keyIDSpace = SDLK_SPACE;
 	CCFG::keyIDShift = SDLK_LSHIFT;
 }
@@ -84,7 +84,7 @@ CCore::~CCore(void) {
 void CCore::mainLoop() {
 	lFPSTime = SDL_GetTicks();
 
-	while(!quitGame && mainEvent->type != SDL_QUIT) {
+	while(!quitGame && mainEvent->type != SDL_EVENT_QUIT) {
 		frameTime = SDL_GetTicks();
 		SDL_PollEvent(mainEvent);
 		SDL_RenderClear(rR);
@@ -131,17 +131,17 @@ void CCore::Input() {
 }
 
 void CCore::InputMenu() {
-	if(mainEvent->type == SDL_KEYDOWN) {
-		CCFG::getMM()->setKey(mainEvent->key.keysym.sym);
+	if(mainEvent->type == SDL_EVENT_KEY_DOWN) {
+		CCFG::getMM()->setKey(mainEvent->key.key);
 
-		switch(mainEvent->key.keysym.sym) {
-			case SDLK_s: case SDLK_DOWN:
+		switch(mainEvent->key.key) {
+			case SDLK_S: case SDLK_DOWN:
 				if(!keyMenuPressed) {
 					CCFG::getMM()->keyPressed(2);
 					keyMenuPressed = true;
 				}
 				break;
-			case SDLK_w: case SDLK_UP:
+			case SDLK_W: case SDLK_UP:
 				if(!keyMenuPressed) {
 					CCFG::getMM()->keyPressed(0);
 					keyMenuPressed = true;
@@ -159,13 +159,13 @@ void CCore::InputMenu() {
 					keyMenuPressed = true;
 				}
 				break;
-			case SDLK_LEFT: case SDLK_d:
+			case SDLK_LEFT: case SDLK_D:
 				if(!keyMenuPressed) {
 					CCFG::getMM()->keyPressed(3);
 					keyMenuPressed = true;
 				}
 				break;
-			case SDLK_RIGHT: case SDLK_a:
+			case SDLK_RIGHT: case SDLK_A:
 				if(!keyMenuPressed) {
 					CCFG::getMM()->keyPressed(1);
 					keyMenuPressed = true;
@@ -174,9 +174,9 @@ void CCore::InputMenu() {
 		}
 	}
 
-	if(mainEvent->type == SDL_KEYUP) {
-		switch(mainEvent->key.keysym.sym) {
-			case SDLK_s: case SDLK_DOWN: case SDLK_w: case SDLK_UP: case SDLK_KP_ENTER: case SDLK_RETURN: case SDLK_ESCAPE: case SDLK_a: case SDLK_RIGHT: case SDLK_LEFT: case SDLK_d:
+	if(mainEvent->type == SDL_EVENT_KEY_UP) {
+		switch(mainEvent->key.key) {
+			case SDLK_S: case SDLK_DOWN: case SDLK_w: case SDLK_UP: case SDLK_KP_ENTER: case SDLK_RETURN: case SDLK_ESCAPE: case SDLK_a: case SDLK_RIGHT: case SDLK_LEFT: case SDLK_d:
 				keyMenuPressed = false;
 				break;
 			default:
@@ -186,19 +186,15 @@ void CCore::InputMenu() {
 }
 
 void CCore::InputPlayer() {
-	if(mainEvent->type == SDL_WINDOWEVENT) {
-		switch(mainEvent->window.event) {
-			case SDL_WINDOWEVENT_FOCUS_LOST:
-				CCFG::getMM()->resetActiveOptionID(CCFG::getMM()->ePasue);
-				CCFG::getMM()->setViewID(CCFG::getMM()->ePasue);
-				CCFG::getMusic()->PlayChunk(CCFG::getMusic()->cPASUE);
-				CCFG::getMusic()->PauseMusic();
-				break;
-		}
+	if(mainEvent->type == SDL_EVENT_WINDOW_FOCUS_LOST) {
+		CCFG::getMM()->resetActiveOptionID(CCFG::getMM()->ePasue);
+		CCFG::getMM()->setViewID(CCFG::getMM()->ePasue);
+		CCFG::getMusic()->PlayChunk(CCFG::getMusic()->cPASUE);
+		CCFG::getMusic()->PauseMusic();
 	}
 
-	if(mainEvent->type == SDL_KEYUP) {
-		if(mainEvent->key.keysym.sym == CCFG::keyIDD) {
+	if(mainEvent->type == SDL_EVENT_KEY_UP) {
+		if(mainEvent->key.key == CCFG::keyIDD) {
 				if(firstDir) {
 					firstDir = false;
 				}
@@ -206,12 +202,12 @@ void CCore::InputPlayer() {
 				keyDPressed = false;
 			}
 
-			if(mainEvent->key.keysym.sym == CCFG::keyIDS) {
+			if(mainEvent->key.key == CCFG::keyIDS) {
 				oMap->getPlayer()->setSquat(false);
 				keyS = false;
 			}
 		
-			if(mainEvent->key.keysym.sym == CCFG::keyIDA) {
+			if(mainEvent->key.key == CCFG::keyIDA) {
 				if(!firstDir) {
 					firstDir = true;
 				}
@@ -219,60 +215,60 @@ void CCore::InputPlayer() {
 				keyAPressed = false;
 			}
 		
-			if(mainEvent->key.keysym.sym == CCFG::keyIDSpace) {
+			if(mainEvent->key.key == CCFG::keyIDSpace) {
 				CCFG::keySpace = false;
 			}
 		
-			if(mainEvent->key.keysym.sym == CCFG::keyIDShift) {
+			if(mainEvent->key.key == CCFG::keyIDShift) {
 				if(keyShift) {
 					oMap->getPlayer()->resetRun();
 					keyShift = false;
 				}
 			}
-		switch(mainEvent->key.keysym.sym) {
+		switch(mainEvent->key.key) {
 			case SDLK_KP_ENTER: case SDLK_RETURN: case SDLK_ESCAPE:
 				keyMenuPressed = false;
 				break;
 		}
 	}
 
-	if(mainEvent->type == SDL_KEYDOWN) {
-		if(mainEvent->key.keysym.sym == CCFG::keyIDD) {
+	if(mainEvent->type == SDL_EVENT_KEY_DOWN) {
+		if(mainEvent->key.key == CCFG::keyIDD) {
 			keyDPressed = true;
 			if(!keyAPressed) {
 				firstDir = true;
 			}
 		}
 
-		if(mainEvent->key.keysym.sym == CCFG::keyIDS) {
+		if(mainEvent->key.key == CCFG::keyIDS) {
 			if(!keyS) {
 				keyS = true;
 				if(!oMap->getUnderWater() && !oMap->getPlayer()->getInLevelAnimation()) oMap->getPlayer()->setSquat(true);
 			}
 		}
 		
-		if(mainEvent->key.keysym.sym == CCFG::keyIDA) {
+		if(mainEvent->key.key == CCFG::keyIDA) {
 			keyAPressed = true;
 			if(!keyDPressed) {
 				firstDir = false;
 			}
 		}
 		
-		if(mainEvent->key.keysym.sym == CCFG::keyIDSpace) {
+		if(mainEvent->key.key == CCFG::keyIDSpace) {
 			if(!CCFG::keySpace) {
 				oMap->getPlayer()->jump();
 				CCFG::keySpace = true;
 			}
 		}
 		
-		if(mainEvent->key.keysym.sym == CCFG::keyIDShift) {
+		if(mainEvent->key.key == CCFG::keyIDShift) {
 			if(!keyShift) {
 				oMap->getPlayer()->startRun();
 				keyShift = true;
 			}
 		}
 
-		switch(mainEvent->key.keysym.sym) {
+		switch(mainEvent->key.key) {
 			case SDLK_KP_ENTER: case SDLK_RETURN:
 				if(!keyMenuPressed) {
 					CCFG::getMM()->enter();
@@ -315,7 +311,7 @@ void CCore::InputPlayer() {
 
 void CCore::MouseInput() {
 	switch(mainEvent->type) {
-		case SDL_MOUSEBUTTONDOWN: {
+		case SDL_EVENT_MOUSE_BUTTON_DOWN: {
 			switch (mainEvent->button.button) {
 				case SDL_BUTTON_LEFT:
 					mouseLeftPressed = true;
@@ -326,14 +322,14 @@ void CCore::MouseInput() {
 			}
 			break;
 		}
-		case SDL_MOUSEMOTION: {
+		case SDL_EVENT_MOUSE_MOTION: {
 			
 			SDL_GetMouseState(&mouseX, &mouseY);
 			//CCFG::getMM()->getConsole()->print("x:" + std::to_string(mouseX));
 			//CCFG::getMM()->getConsole()->print("y:" + std::to_string(mouseY));
 			break;
 		}
-		case SDL_MOUSEBUTTONUP: {
+		case SDL_EVENT_MOUSE_BUTTON_UP: {
 			switch (mainEvent->button.button) {
 				case SDL_BUTTON_LEFT:
 					mouseLeftPressed = false;
@@ -344,7 +340,7 @@ void CCore::MouseInput() {
 			}
 			break;
 		}
-		case SDL_MOUSEWHEEL:
+		case SDL_EVENT_MOUSE_WHEEL:
 			if(mainEvent->wheel.timestamp > SDL_GetTicks() - 2) {
 				//CCFG::getMM()->getLE()->mouseWheel(mainEvent->wheel.y);
 			}
